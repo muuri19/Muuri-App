@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:muuri_app/pages/sign_in_page.dart';
+import 'package:muuri_app/widgets/tab_bar_certificate.dart';
+import 'package:muuri_app/widgets/tab_bar_project.dart';
 
 class SearchPage extends StatefulWidget {
   static const routeName = 'search-page';
@@ -9,48 +12,57 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Scaffold(
         backgroundColor: const Color(0xff152A38),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/logo-google-developer.png',
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 50,
-                width: screenWidth,
-                child: TextField(
-                  style: const TextStyle(color: Colors.black),
-                  cursorColor: Colors.black,
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Search Project',
-                    hintStyle: TextStyle(color: Colors.grey[300]),
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.white)),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.white)),
+        appBar: AppBar(
+          title: const Text('MUURI - API 🚀'),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 18),
+          backgroundColor: const Color(0xff152A38),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, SignInPage.routeName); 
+              },
+              style: ButtonStyle(
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
               ),
+              child: const Text(
+                'Login Admin',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
+          ],
+          bottom: const TabBar(
+            indicatorColor: Colors.white,
+            unselectedLabelColor: Color(0xff696D78),
+            labelStyle: TextStyle(color: Colors.white),
+            tabs: [
+              Tab(
+                text: 'Project',
+              ),
+              Tab(
+                text: 'Certificate',
+              ),
             ],
           ),
-        ));
+        ),
+        body: const TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            TabBarProject(),
+            TabBarCertificate(),
+          ],
+        ),
+      ),
+    );
   }
 }
