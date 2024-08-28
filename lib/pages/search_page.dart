@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:muuri_app/pages/sign_in_page.dart';
 import 'package:muuri_app/widgets/tab_bar_certificate.dart';
 import 'package:muuri_app/widgets/tab_bar_project.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchPage extends StatefulWidget {
   static const routeName = 'search-page';
@@ -12,6 +13,14 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  final Uri _url = Uri.parse(
+      'https://wa.me/6282268215563?text=Hallo%20Muuri!,%20Can%20You%20Help%20Me?');
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -26,7 +35,7 @@ class _SearchPageState extends State<SearchPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, SignInPage.routeName); 
+                Navigator.pushNamed(context, SignInPage.routeName);
               },
               style: ButtonStyle(
                 shape: WidgetStateProperty.all(
@@ -62,6 +71,26 @@ class _SearchPageState extends State<SearchPage> {
             TabBarCertificate(),
           ],
         ),
+        floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              _launchUrl();
+            },
+            label: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/bot.png',
+                  height: 25,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const Text(
+                  'Chat Me',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                )
+              ],
+            )),
       ),
     );
   }

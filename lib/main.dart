@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:muuri_app/components/pdf_viewer_component.dart';
 import 'package:muuri_app/config/firebase_options.dart';
 import 'package:muuri_app/pages/search_page.dart';
 import 'package:muuri_app/pages/sign_in_page.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       routes: {
         SearchPage.routeName: (context) => const SearchPage(),
         SignInPage.routeName: (context) => const SignInPage(),
+      
       },
     );
   }
