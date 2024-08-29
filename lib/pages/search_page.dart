@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:muuri_app/pages/sign_in_page.dart';
 import 'package:muuri_app/widgets/tab_bar_certificate.dart';
 import 'package:muuri_app/widgets/tab_bar_project.dart';
@@ -13,8 +14,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final Uri _url = Uri.parse(
-      'https://wa.me/6282268215563?text=Hallo%20Muuri!,%20Can%20You%20Help%20Me?');
+  final Uri _url = Uri.parse(dotenv.env['WHATSAPP_URL']!);
   Future<void> _launchUrl() async {
     if (!await launchUrl(_url)) {
       throw Exception('Could not launch $_url');
@@ -72,6 +72,7 @@ class _SearchPageState extends State<SearchPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
+            backgroundColor: const Color(0xff2F8886),
             onPressed: () {
               _launchUrl();
             },
@@ -87,7 +88,10 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 const Text(
                   'Chat Me',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 )
               ],
             )),
